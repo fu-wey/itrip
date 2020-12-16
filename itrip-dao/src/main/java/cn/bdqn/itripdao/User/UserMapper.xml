@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="cn.bdqn.itripdao.User.UserMapper">
+    <insert id="insert" parameterType="cn.bdqn.itripbeans.pojo.User">
+        insert into user ( username, password,email,active_status,active_code)
+        values (#{username}, #{password}, #{email},#{activeStatus},#{activeCode})
+      </insert>
+
+    <select id="selectUserByActiveCode" parameterType="String" resultType="cn.bdqn.itripbeans.pojo.User">
+        select * from user where active_code = #{activeCode}
+     </select>
+
+    <!--激活账户，修改用户状态-->
+    <update id="update" parameterType="cn.bdqn.itripbeans.pojo.User">
+      update user
+      set active_status=#{activeStatus},username=#{username},password=#{password},
+          email=#{email}, active_status=#{activeStatus},active_code=#{activeCode}
+      where id=#{id}
+    </update>
+
+    <!--登录,根据 activeStatus=1 进行查询-->
+    <select id="select" resultType="cn.bdqn.itripbeans.pojo.User">
+      select * from user where username=#{username} and password=#{password} and active_status=1
+    </select>
+</mapper>
